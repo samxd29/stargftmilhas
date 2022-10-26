@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Projeto GFT-Milhas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<div id="Menu">
+    <nav class="navbar navbar-expand-lg bg-light mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">GFT-Milhas</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Usuarios</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/usuario/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/usuario/cadastrar}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Participantes</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/participante/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/participante/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Grupos</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/grupo/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/grupo/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown" >
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Eventos</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/evento/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/evento/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Atividades</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/atividade/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/atividade/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Informações do Evento</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/informacaoEvento/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/informacaoEvento/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Presença</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/presenca/listar}">Listar</a></li>
+                            <li><a class="dropdown-item" th:href="@{/presenca/novo}">Cadastrar</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div id="conteudo" class="container" layout:fragment="content">
+
+</div>
+<script href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

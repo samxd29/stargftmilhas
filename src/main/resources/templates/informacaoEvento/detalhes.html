@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body">
+            <div class="fs-3">
+                <span th:text="${informacaoEvento.atividade.nome}"></span>
+            </div>
+            <div class="fs-5">
+                <span th:text="${#dates.format(informacaoEvento.dataRegistro, 'dd/MM/yyyy')}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-primary" th:if="${#lists.isEmpty(participantes)}">Nenhum participante cadastrado</div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Nivel</th>
+            <th>Email</th>
+            <th>Quatro Letras</th>
+            <th>Entrega</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="participante: ${participantes}">
+            <td th:text="${participante.id}"></td>
+            <td th:text="${participante.nome}"></td>
+            <td th:text="${participante.nivel}"></td>
+            <td th:text="${participante.email}"></td>
+            <td th:text="${participante.quatroLetras}"></td>
+            <td><div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Atividade entregue</label>
+            </div></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</div>
+</html>

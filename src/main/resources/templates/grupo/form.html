@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout" layout:decorate="~{layout.html}">
+    <head>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    </head>
+    <body>
+    <div layout:fragment="content">
+        <div class="alert alert-success alert-dismissible mt-3" role="alert" th:if="${not #strings.isEmpty(message)}">
+            <span th:text="${message}"></span>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <p class="text-primary">Novo Grupo</p>
+            </div>
+            <div class="card-body">
+                <form method="POST" th:object="${grupo}" th:action="@{/grupo/cadastrar}">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="name">Nome</label>
+                        <input class="form-control" type="text" th:field="*{nome}" th:errorClass="is-invalid">
+                        <div class="invalid-feedback" th:errors="*{nome}"></div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="qtdPessoas">Quantidade de Pessoas</label>
+                        <input class="form-control" type="text" th:field="*{qtdPessoas}">
+                        <div class="text-danger" th:if="${#fields.hasErrors('qtdPessoas')}" th:errors="*{qtdPessoas}"></div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="participantes">Escolha os participantes:</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{participantes}" multiple>
+                            <option th:each="participante: ${participantes}" th:value="${participante.id}"
+                                    th:text="${participante.nome}"/>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="atividade.evento">Eventos</label>
+                        <select class="form-select" aria-label="Default select example" th:field="*{evento}" multiple>
+                            <option th:each="eventos:${listaEventos}" th:value="${eventos.id}" th:text="${eventos.nome}"/>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar Grupo</button>
+                </form>
+            </div>
+        </div>
+        <script>$(document).ready(function() {
+                    $('.form-select').select2();
+                });
+        </script>
+    </div>
+
+    </body>
+</html>

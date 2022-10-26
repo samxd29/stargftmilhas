@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout" layout:decorate="~{layout.html}">
+<head>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="alert alert-success alert-dismissible mt-3" role="alert" th:if="${not #strings.isEmpty(message)}">
+        <span th:text="${message}"></span>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <p class="text-primary">Participantes</p>
+        </div>
+        <div th:each="p : ${grupoobj}">
+            <div class="row">
+                <p>ID: <span th:text="${p.idgrupo}"></span></p>
+            </div>
+        </div>
+
+        <script>$(document).ready(function() {
+                    $('.form-select').select2();
+                });
+        </script>
+</div>
+
+</body>
+</html>

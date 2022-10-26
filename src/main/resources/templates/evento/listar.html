@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <div class="alert alert-primary" th:if="${#lists.isEmpty(listaEventos)}">Nenhum evento cadastrado</div>
+    <div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+    <div th:if="${not #lists.isEmpty(listaEventos)}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Participante</th>
+                <th>Presença</th>
+                <th>Data Final</th>
+<!--                <th>Atividade</th>-->
+<!--                <th>Grupo</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="evento: ${listaEventos}">
+                <td><a th:href="@{/evento/listar/presentes/(idEvento=${evento.id})}"><span th:text="${evento.id}"></span></a></td>
+                <td th:text="${evento.nome}"></td>
+                <td th:text="${#dates.format(evento.dataInicio, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#dates.format(evento.dataFinal, 'dd/MM/yyyy')}"></td>
+                <td><a class="btn btn-primary btn-small" th:href="@{/eventos/editar(id=${evento.id})}">Editar</a>
+                    <a class="btn btn-primary btn-small" th:href="@{/eventos/excluir(id=${evento.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</html>

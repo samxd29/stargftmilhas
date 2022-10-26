@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <div class="alert alert-primary" th:if="${#lists.isEmpty(lista)}">Nenhum grupo cadastrado</div>
+    <div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+    <div th:if="${not #lists.isEmpty(lista)}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Quantidade de Pessoas</th>
+                <th>Participantes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="grupo: ${lista}">
+                <td th:text="${grupo.id}"></td>
+                <td><a th:href="@{/grupo/listar/participantes/{idgrupo}(idgrupo=${grupo.id})}"><span th:text="${grupo.nome}"></span></a></td>
+                <td th:text="${grupo.qtdPessoas}"></td>
+                <td> <p th:each="lista: ${grupo.participantes}"> <span class="badge text-bg-secondary" th:text="${lista.nome}"></span></p></td>
+                <td><a class="btn btn-primary btn-small" th:href="@{/grupo/editar(id=${grupo.id})}">Editar</a>
+                    <a class="btn btn-primary btn-small" th:href="@{/grupo/excluir(id=${grupo.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+</html>
