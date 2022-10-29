@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<meta charset="UTF-8">
+<div layout:fragment="content">
+    <div>
+            <div class="row" th:each="atividades : ${detalhes}">
+                <h4><span th:text="${atividades.nome}"></span></h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Entrega</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="participantes: ${listarParticipantes}">
+                        <td th:text="${participantes.id}"></td>
+                        <td th:text="${participantes.nome}"></td>
+                        <td>
+                            <form method="Post" th:action="@{/atividade/detalhes}">
+                                <input type="hidden" name="id.participante.id" th:value="${participantes.id}">
+                                <input type="hidden" name="id.atividade.id" th:value="${atividades.id}">
+                                <input type="hidden" name="detalhesid" th:value="${atividades.id}">
+                                <select name="status">
+                                    <option th:each="status: ${T(stargftmilhas.model.Status).values()}"
+                                            th:value="${status}" th:text="${status.nome}">
+                                    </option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn btn-primary-form">Salvar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

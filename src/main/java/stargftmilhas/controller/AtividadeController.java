@@ -128,12 +128,4 @@ public class AtividadeController {
         return "redirect:/atividade/detalhes/" + codigo;
     }
 
-//    @GetMapping("/detalhes/{id}")
-//    public ModelAndView atividadeDetalhes(@PathVariable Long id) throws Exception {
-//        ModelAndView mv = new ModelAndView("atividade/detalhes");
-//        Atividade atividade;
-//        var resultado = atividadeService.consultarAtividadePorId(id);
-//        mv.addObject("listaAtividades", atividade);
-//        return mv;
-//    }
 }

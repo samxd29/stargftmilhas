@@ -45,6 +45,6 @@ public class EventoService {
         if (evento == null) {
             throw new RuntimeException("Evento não cadastrado!");
         }
-        eventoRepository.delete(evento);
+        eventoRepository.deleteById(id);
     }
 }

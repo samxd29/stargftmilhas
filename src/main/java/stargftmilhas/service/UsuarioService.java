@@ -21,7 +21,6 @@ public class UsuarioService {
 
         usuarioEditar.setNome(usuario.getNome());
         usuarioEditar.setPermissoes(usuario.getPermissoes());
-        usuarioEditar.setSenha(usuario.getSenha());
 
         return usuarioRepository.save(usuario);
     }
@@ -30,11 +29,11 @@ public class UsuarioService {
         if (usuario.getId() == null){
             var usuarioExistente = usuarioRepository.findByNome(usuario.getNome());
             if(usuarioExistente.isPresent()){
-                throw new RuntimeException("Usuário já cadastrado.");
+                throw new RuntimeException("Existe um usuário cadastrado com esse nome.");
             }
         }
         if(usuario.getPermissoes().isEmpty()){
-            usuario.setPermissoes(Collections.singletonList(new Permissao(2L, "ROLE_USER")));
+            usuario.setPermissoes(usuario.getPermissoes());
         }
         usuario.setSenha(new BCryptPasswordEncoder().encode(usuario.getSenha()));
 
@@ -63,7 +62,7 @@ public class UsuarioService {
         return usuarioRepository.findById(id).get();
     }
 
-    public List<Usuario> listarUsuario(String nome){
+    public List<Usuario> listarUsuario(){
         return usuarioRepository.findAll();
     }
 

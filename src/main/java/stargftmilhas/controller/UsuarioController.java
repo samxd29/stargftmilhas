@@ -7,126 +7,78 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import stargftmilhas.model.Usuario;
+import stargftmilhas.service.PermissaoService;
 import stargftmilhas.service.UsuarioService;
 
 import javax.validation.Valid;
 
 
 @Controller
-@RequestMapping("templates/usuario")
+@RequestMapping("/usuario")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
 
-    @GetMapping
-    public ModelAndView getModelAndView() {
-        ModelAndView mv = new ModelAndView("templates/usuario/form.html");
-        mv.addObject("templates/usuario", new Usuario());
+    @Autowired
+    private PermissaoService permissaoService;
+
+    @GetMapping("/novo")
+    public ModelAndView novoUsuario(Usuario usuario){
+        ModelAndView mv = new ModelAndView("usuario/form");
+        mv.addObject("listaPermissoes", permissaoService.listaPermissao());
         return mv;
     }
 
-    @RequestMapping("/cadastrar")
-    public ModelAndView novoUsuario() {
-        ModelAndView mv = new ModelAndView("templates/usuario/form.html");
-        mv.addObject("templates/usuario", new Usuario());
-        return mv;
-    }
+    @PostMapping("/cadastrar")
+    public ModelAndView salvarUsuario(@Valid Usuario usuario, BindingResult bindingResult, RedirectAttributes attributes){
 
-   @PostMapping("/cadastrar")
-    public ModelAndView cadastrar(@Valid Usuario usuario, BindingResult bindingResult) {
-        ModelAndView mv = new ModelAndView("templates/usuario/form.html");
+        if (bindingResult.hasErrors()){
+            return novoUsuario(usuario);
+        }
+        try {
+            usuarioService.usuarioSalvar(usuario);
+        }catch (RuntimeException e){
+            bindingResult.rejectValue("nome", e.getMessage(), e.getMessage());
 
-        boolean novo = true;
-
-        if (usuario.getId() != null) {
-            novo = false;
+            return novoUsuario(usuario);
         }
 
-        if (bindingResult.hasErrors()) {
-            mv.addObject("templates/usuario", usuario);
-            return mv;
-        }
+        attributes.addFlashAttribute("message", "Usuario Salvo com sucesso.");
 
-        usuarioService.usuarioSalvar(usuario);
-
-        if (novo) {
-            mv.addObject("templates/usuario", new Usuario());
-        } else {
-            mv.addObject("templates/usuario", usuario);
-        }
-
-        mv.addObject("mensagem", "Usuário salvo com sucesso!");
-
-        return mv;
+        return new ModelAndView("redirect:/usuario/novo");
     }
 
     @GetMapping("/listar")
-    public ModelAndView listarUsuario(String nome) {
-        ModelAndView mv = new ModelAndView("templates/usuario/listar.html");
-        mv.addObject("lista", usuarioService.listarUsuario("nome"));
-
+    public ModelAndView listarUsuarios(){
+        ModelAndView mv = new ModelAndView("usuario/listar");
+        mv.addObject("lista", usuarioService.listarUsuario());
         return mv;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "editar")
-    public ModelAndView editarUsuario(@RequestParam(required = false) Long id){
-        ModelAndView mv = new ModelAndView("templates/usuario/form.html");
-
+    @GetMapping("/editar")
+    public ModelAndView editarUsuario(@RequestParam Long id){
+        ModelAndView mv = new ModelAndView("usuario/form");
         Usuario usuario;
-
-        if(id == null){
+        try {
+            usuario = usuarioService.obterUsuario(id);
+        }catch (Exception e){
             usuario = new Usuario();
-        }else {
-            try {
-                usuario = usuarioService.obterUsuario(id);
-            } catch (Exception e) {
-                usuario = new Usuario();
-                mv.addObject("mensagem", e.getMessage());
-            }
+            mv.addObject("message", usuario);
         }
-
-        mv.addObject("templates/usuario", usuario);
+        mv.addObject("usuario", usuario);
+        mv.addObject("listaPermissoes", permissaoService.listaPermissao());
         return mv;
     }
 
-    @RequestMapping(method = RequestMethod.POST,path = "editar")
-    public ModelAndView salvarUsuario(@Valid Usuario usuario, BindingResult bindingResult) {
-        ModelAndView mv = new ModelAndView("templates/usuario/form.html");
-
-        boolean novo = true;
-
-        if (usuario.getId() != null){
-            novo = false;
-        }
-
-        if (bindingResult.hasErrors()){
-            mv.addObject("templates/usuario", usuario);
-            return mv;
-        }
-
-        usuarioService.usuarioSalvar(usuario);
-
-        if (novo){
-            mv.addObject("templates/usuario", new Usuario());
-        } else {
-            mv.addObject("templates/usuario", usuario);
-        }
-
-        mv.addObject("mensagem", "Usuario salvo com sucesso!");
-        mv.addObject("listaUsuarios", usuarioService.listarUsuario(usuario.getNome()));
-
-        return mv;
-    }
-
-    @RequestMapping("/excluir")
-    public ModelAndView excluirUsuario(@RequestParam Long id, RedirectAttributes redirectAttributes){
+    @GetMapping("/excluir")
+    public ModelAndView deletarUsuario(@RequestParam Long id, RedirectAttributes redirectAttributes){
         ModelAndView mv = new ModelAndView("redirect:/usuario/listar");
         try {
             usuarioService.usuarioExcluir(id);
-            redirectAttributes.addFlashAttribute("mensagem", "Usuario excluido com sucesso!");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("mensagem", "Erro ao excluir usuário!");
+            redirectAttributes.addFlashAttribute("message", "Registro excluído com sucesso");
+        }catch (Exception e){
+            redirectAttributes.addFlashAttribute("messageError", "Usuário não pode ser excluido");
         }
         return mv;
     }
