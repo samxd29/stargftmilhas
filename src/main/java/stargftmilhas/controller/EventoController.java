@@ -17,7 +17,7 @@ import stargftmilhas.service.GrupoService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("evento")
+@RequestMapping("/evento")
 public class EventoController {
 
     @Autowired
@@ -56,7 +56,7 @@ public class EventoController {
         return new ModelAndView("redirect:/evento/novo");
     }
 
-    @GetMapping("editar")
+    @GetMapping("/editar")
     public ModelAndView editarEvento(@RequestParam Long id){
         ModelAndView mv = new ModelAndView("evento/form");
         Evento evento;
@@ -71,7 +71,7 @@ public class EventoController {
         return mv;
     }
 
-    @GetMapping("listar")
+    @GetMapping("/listar")
     public ModelAndView listarEventos(){
         ModelAndView mv = new ModelAndView("evento/listar");
         mv.addObject("listaEventos", eventoService.listarTodos());
@@ -79,7 +79,7 @@ public class EventoController {
         return mv;
     }
 
-    @GetMapping("excluir")
+    @GetMapping("/excluir")
     public ModelAndView excluirEvento(@RequestParam Long id, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("redirect:/evento/listar");
         if (id == null) {
@@ -96,7 +96,7 @@ public class EventoController {
     public ModelAndView presenca(@RequestParam String idEvento, RedirectAttributes redirectAttributes){
         ModelAndView mv = new ModelAndView("participacao/lista-presenca");
         var evento = eventoService.buscarEventoPorId(Long.valueOf(idEvento));
-        mv.addObject("detalhes", evento.getInformacaoEventos());
+        mv.addObject("detalhes", evento.getParticipacao());
 
         return mv;
     }

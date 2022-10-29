@@ -29,14 +29,14 @@
                     </div>
                     <div class="form-group mb-3">
                         <label class="form-label" for="participantes">Escolha os participantes:</label>
-                        <select class="form-select" aria-label="Default select example" th:field="*{participantes}" multiple>
+                        <select class="form-select" aria-label="Default select example" th:field="*{participantes}" multiple required>
                             <option th:each="participante: ${participantes}" th:value="${participante.id}"
                                     th:text="${participante.nome}"/>
                         </select>
                     </div>
                     <div class="form-group mb-3">
                         <label for="atividade.evento">Eventos</label>
-                        <select class="form-select" aria-label="Default select example" th:field="*{evento}" multiple>
+                        <select class="form-select" aria-label="Default select example" th:field="*{evento}" multiple required>
                             <option th:each="eventos:${listaEventos}" th:value="${eventos.id}" th:text="${eventos.nome}"/>
                         </select>
                     </div>

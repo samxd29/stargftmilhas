@@ -23,7 +23,7 @@
                 <td th:text="${#dates.format(atividade.dataFinal, 'dd/MM/yyyy')}"></td>
                 <td><a th:href="${(#mvc.url('AC#entregaAtividade').arg(0,atividade.id)).build()}"><button type="button" class="btn btn-primary">Veja Mais</button></span></a></td>
                 <td><a class="btn btn-primary btn-small" th:href="@{/atividade/editar(id=${atividade.id})}">Editar</a>
-                    <a class="btn btn-primary btn-small" th:href="@{/atividade/excluir(id=${atividade.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
+                    <a class="btn btn-primary btn-small" th:href="@{/atividade/excluir(id=${atividade.id})}" onclick="return confirm('Você realmente deseja excluir os dados dessa página??')">Excluir</a>
                 </td>
             </tr>
             </tbody>

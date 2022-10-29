@@ -1,6 +1,6 @@
 package stargftmilhas.model;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Atividade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

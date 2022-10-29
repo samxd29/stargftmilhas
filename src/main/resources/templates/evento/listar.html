@@ -10,11 +10,9 @@
             <thead>
             <tr>
                 <th>Id</th>
-                <th>Participante</th>
-                <th>Presença</th>
+                <th>Evento</th>
+                <th>Data Inicial</th>
                 <th>Data Final</th>
-<!--                <th>Atividade</th>-->
-<!--                <th>Grupo</th>-->
             </tr>
             </thead>
             <tbody>
@@ -23,8 +21,8 @@
                 <td th:text="${evento.nome}"></td>
                 <td th:text="${#dates.format(evento.dataInicio, 'dd/MM/yyyy')}"></td>
                 <td th:text="${#dates.format(evento.dataFinal, 'dd/MM/yyyy')}"></td>
-                <td><a class="btn btn-primary btn-small" th:href="@{/eventos/editar(id=${evento.id})}">Editar</a>
-                    <a class="btn btn-primary btn-small" th:href="@{/eventos/excluir(id=${evento.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
+                <td><a class="btn btn-primary btn-small" th:href="@{/evento/editar(id=${evento.id})}">Editar</a>
+                    <a class="btn btn-primary btn-small" th:href="@{/evento/excluir(id=${evento.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
                 </td>
             </tr>
             </tbody>

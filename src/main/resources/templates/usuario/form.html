@@ -3,6 +3,9 @@
 <div layout:fragment="content">Essa é uma página sobre Cadastro de Usuário</div>
 <meta charset="UTF-8">
 <div layout:fragment="content">
+    <div class="alert alert-success alert-dismissible mt-3" role="alert" th:if="${not #strings.isEmpty(message)}">
+        <span th:text="${message}"></span>
+    </div>
     <div class="card">
         <div class="card-header">
             <p class="text-primary">Novo Usuário</p>
@@ -12,26 +15,37 @@
                 <input type="hidden" th:field="*{id}">
                 <div class="form-group mb-3">
                     <label for="name">Nome</label>
-                    <input class="form-control" type="text" th:field="*{nome}" required>
+                    <input class="form-control" type="text" th:field="*{nome}">
                     <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
                 </div>
                 <div class="form-group mb-3">
                     <label for="quatroLetras">Quatro Letras</label>
-                    <input class="form-control" type="text" th:field="*{quatroLetras}" maxlength="4" required>
+                    <input class="form-control" type="text" th:field="*{quatroLetras}" maxlength="4">
                     <div class="text-danger" th:if="${#fields.hasErrors('quatroLetras')}" th:errors="*{quatroLetras}"></div>
                 </div>
                 <div class="form-group mb-3">
                     <label for="email">Email</label>
-                    <input class="form-control" type="email" th:field="*{email}" required>
+                    <input class="form-control" type="email" th:field="*{email}">
                     <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
                 </div>
                 <div class="form-group mb-3">
                     <label for="senha">Senha</label>
-                    <input class="form-control"  step="0.01" type="password" th:field="*{senha}" required>
+                    <input class="form-control"  step="0.01" type="password" th:field="*{senha}">
                     <div class="text-danger" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
                 </div>
+
+                <div class="form-group mb-3">
+                    <p>Permissões</p>
+                    <fieldset class="border">
+                        <div th:each="permissao: ${listaPermissoes}" class="form-check form-check-inline m-3">
+                            <input class="form-check-input" type="checkbox" th:id="${permissao}" th:value="${permissao.id}" th:field="*{permissoes}"/>
+                            <label class="form-check-label" th:for="${permissao}" th:text="${permissao.nome.substring(5)}"></label>
+                        </div>
+                    </fieldset>
+                </div>
+
                 <div>
-                    <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
         </div>

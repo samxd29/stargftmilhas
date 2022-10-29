@@ -74,4 +74,20 @@ public class GrupoController {
         return mv;
     }
 
+    @GetMapping("/editar")
+    public ModelAndView editar(@RequestParam Long id){
+        ModelAndView mv = new ModelAndView("grupo/form");
+        Grupo grupo;
+        try {
+            grupo = grupoService.consultarPorId(id);
+        }catch (Exception e){
+            grupo = new Grupo();
+            mv.addObject("message", grupo);
+        }
+        mv.addObject("grupo", grupo);
+        mv.addObject("participantes",grupo.getParticipantes());
+        mv.addObject("listaEventos", grupo.getEvento());
+        return mv;
+    }
+
 }

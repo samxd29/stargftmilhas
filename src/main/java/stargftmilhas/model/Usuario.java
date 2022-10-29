@@ -1,23 +1,35 @@
 package stargftmilhas.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "O nome é obrigatório")
     private String nome;
+
+    @NotBlank(message = "A senha é obrigatória")
     private String senha;
+
+    private String email;
+
+    private String quatroLetras;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permissao> permissoes = new ArrayList<>(

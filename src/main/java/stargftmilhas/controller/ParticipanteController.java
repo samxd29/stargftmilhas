@@ -74,24 +74,6 @@ public class ParticipanteController {
         mv.addObject("grupos", grupoService.listarTodos());
         return mv;
     }
-//
-//    @PostMapping("cadastrar")
-//    public ModelAndView salvar(@Valid Participante participante, BindingResult bindingResult, RedirectAttributes attributes) {
-//
-//        if (bindingResult.hasFieldErrors()) {
-//            return novoParticipante(participante);
-//        }
-//
-//        try {
-//            participanteService.salvarParticipante(participante);
-//        }catch (RuntimeException e){
-//            bindingResult.rejectValue("nome", e.getMessage(), e.getMessage());
-//        }
-//
-//        attributes.addFlashAttribute("message", "Participante salvo com sucesso!.");
-//
-//        return new ModelAndView("redirect:/participante/novo");
-//    }
 
     @RequestMapping(method = RequestMethod.GET, path = "/listar")
     public ModelAndView listarParticipantes(String nome) {

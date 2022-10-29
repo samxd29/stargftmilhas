@@ -13,6 +13,7 @@
                 <th>Nome</th>
                 <th>Quantidade de Pessoas</th>
                 <th>Participantes</th>
+                <th>Grupo</th>
             </tr>
             </thead>
             <tbody>
@@ -21,6 +22,7 @@
                 <td><a th:href="@{/grupo/listar/participantes/{idgrupo}(idgrupo=${grupo.id})}"><span th:text="${grupo.nome}"></span></a></td>
                 <td th:text="${grupo.qtdPessoas}"></td>
                 <td> <p th:each="lista: ${grupo.participantes}"> <span class="badge text-bg-secondary" th:text="${lista.nome}"></span></p></td>
+                <td th:text="${grupo.evento.nome}"></td>
                 <td><a class="btn btn-primary btn-small" th:href="@{/grupo/editar(id=${grupo.id})}">Editar</a>
                     <a class="btn btn-primary btn-small" th:href="@{/grupo/excluir(id=${grupo.id})}" onclick="return confirm('Você realmente deseja excluir essa mensagem?')">Excluir</a>
                 </td>
